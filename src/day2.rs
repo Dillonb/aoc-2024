@@ -15,12 +15,13 @@ fn get_input(path: &str) -> Vec<Vec<i32>> {
 }
 
 fn is_safe(report: &Vec<i32>) -> bool {
-    let differences = report
+    let differences : Vec<i32> = report
         .windows(2)
-        .map(|transition| (transition[1] - transition[0]));
+        .map(|transition| (transition[1] - transition[0]))
+        .collect();
 
-    let all_valid_decrease = differences.clone().into_iter().all(|difference| difference < 0 && difference > -4);
-    let all_valid_increase = differences.clone().into_iter().all(|difference| difference > 0 && difference < 4);
+    let all_valid_decrease = differences.iter().all(|difference| *difference < 0 && *difference > -4);
+    let all_valid_increase = differences.iter().all(|difference| *difference > 0 && *difference < 4);
 
     let result = all_valid_decrease || all_valid_increase;
     return result;
@@ -43,9 +44,10 @@ fn is_safe_part2(report: &Vec<i32>) -> bool {
 
 fn main() {
     let input = get_input("data/day2/input");
-    let num_safe_part1 = input.clone().into_iter().filter(is_safe).count();
+    let num_safe_part1 = input.iter().filter(|report: &&Vec<i32>| is_safe(*report)).count();
     println!("Part 1, number of safe lines: {}", num_safe_part1);
 
-    let num_safe_part2 = input.clone().into_iter().filter(is_safe_part2).count();
+
+    let num_safe_part2 = input.iter().filter(|report: &&Vec<i32>| is_safe_part2(*report)).count();
     println!("Part 2, number of safe lines: {}", num_safe_part2);
 }

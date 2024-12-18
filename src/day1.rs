@@ -23,15 +23,15 @@ fn get_input(path: &str) -> (Vec<i32>, Vec<i32>) {
 fn main() {
     let (left, right) = get_input("data/day1/input");
 
-    let sum: i32 = left.clone()
-        .into_iter()
-        .zip(right.clone().into_iter())
+    let sum: i32 = left
+        .iter()
+        .zip(right.iter())
         .map(|(left, right)| (left - right).abs())
         .sum();
 
     println!("Part 1, sum: {}", sum);
 
-    let similarity_score: i32 = left.into_iter().map(|item| item * right.clone().into_iter().filter(|right_item| *right_item == item).count() as i32).sum();
+    let similarity_score: i32 = left.into_iter().map(|item| item * right.iter().filter(|right_item| **right_item == item).count() as i32).sum();
 
     println!("Part 2, similarity score: {}", similarity_score);
 }
